@@ -142,13 +142,13 @@ def usage():
     print 'usage: irc.py word_to_search file_to_search',\
           'search_type=user_name extra_stopwords=None'
     
-# main function 
-def main():
-    
+ 
+def main():    
     search_types = 'user_name', 'sentence'
-    input_length = len(sys.argv)
     search_type = 'user_name'
     extra_stopwords = []
+    input_length = len(sys.argv)
+    
     if not (2 < input_length < 6):
         print 'input parameters out of bounds'
         usage()
@@ -171,7 +171,6 @@ def main():
     file = open(file_name,'r')
     msg = file.read()
     file.close()
-    #msg = '[17:36] <GorySnake> how ss how HOW how ss ! was your session ,, yesterday apollo\nI am dying lads\n[17:36] <Gory-Snake> dont forget to import data after you download it Cobelcog\n[17:36] <apollo> we won all but one game\n[17:37] <Cobelcog> how do i do that?'
     frequency_list = get_freq(name, msg, search_type, extra_stopwords)
     word_cloud(frequency_list)
            
