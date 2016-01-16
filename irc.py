@@ -10,7 +10,7 @@ from scipy import ndimage
 
 
 def return_stopword_list():
-    """ Returns stops as a list of strings.
+    """ Returns stop words as a list of strings.
     """
     return ['i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you', 'your', 'yours',
             'yourself', 'yourselves', 'he', 'him', 'his', 'himself', 'she', 'her', 'hers',
