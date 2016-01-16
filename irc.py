@@ -62,7 +62,7 @@ def get_freq(name, msg):
             
     sorted_tuple = sorted(tuples, key = get_tuples, reverse = True)
     
-    return sorted_tuple[:max(50, len(sorted_tuple))]
+    return sorted_tuple[:max(200, len(sorted_tuple))]
     # for tuple in sorted_tuple:
         # line = ' '.join(str(x) for x in tuple)
         # file2.write(line + '\n')
@@ -92,7 +92,7 @@ def word_cloud(frequency_list):
             fnt = ImageFont.truetype('Calibri.ttf', int(fontlist[iteration]))
             size = fnt.getsize(word)
             #bigger rectangle than bounding box to compensate
-            rect = (size[0]+40, size[1]+40)
+            rect = (size[0]+30, size[1]+30)
             result = scipy.ndimage.filters.uniform_filter(image, rect, mode='constant', cval = 255)
             location = ny.argwhere(result==0)
     
@@ -121,7 +121,7 @@ def main():
     file = open('small_irc.txt','r')
     msg = file.read()
     file.close()
-    name = 'reh'   #make this lower case before passing it to the function.
+    name = 'apollo'   #make this lower case before passing it to the function.
        
     #create and return dict
     #msg = '[17:36] <GorySnake> how ss how HOW how ss ! was your session ,, yesterday apollo\nI am dying lads\n[17:36] <GorySnake> dont forget to import data after you download it Cobelcog\n[17:36] <apollo> we won all but one game\n[17:37] <Cobelcog> how do i do that?'
