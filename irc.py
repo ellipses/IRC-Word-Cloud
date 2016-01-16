@@ -87,7 +87,7 @@ def get_freq(name, msg, search_type, extra_stopwords):
     with open('result.txt', 'w') as file:
         for tuple in smaller:
             file.write(tuple[0] + ' %d' % tuple[1] + '\n')
-    
+
     return smaller
 
 
