@@ -2,7 +2,6 @@
 
 import re
 import sys
-import scipy
 import random
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
@@ -35,8 +34,9 @@ def get_tuples(tuple):
 
 
 def match_name(word, msg, search_type):
-    """ Returns list of sentences by user or sentences with
-        the word depending on search type.
+    """
+    Returns list of sentences by user or sentences with
+    the word depending on search type.
     """
     time_stamp = '\[\d\d:\d\d\]'
     end_time_stamp = '(?:(?!\[\d\d:\d\d\]).)*'
@@ -44,21 +44,21 @@ def match_name(word, msg, search_type):
     sentence = ' <([\w*\-*\^*\@*]*)>([\w\s%s]*)' % special_char
     search_word = '%s' % word
 
-    result = re.findall(time_stamp+sentence+end_time_stamp, msg)
+    result = re.findall(time_stamp + sentence + end_time_stamp, msg)
     print 'adding to list'
     word_list = []
     for (name, sentence) in result:
-        sentence = re.sub('['+special_char+'\n'+']', '', sentence)
+        sentence = re.sub('[' + special_char + '\n' + ']', '', sentence)
         if search_type == 'user_name':
-            if re.match('\S*'+search_word.lower()+'\S*', name.lower()):
+            if re.match('\S*' + search_word.lower() + '\S*', name.lower()):
                 word_list += sentence.split()
         else:
-            if re.match('.*'+search_word.lower()+'.*', sentence.lower()):
+            if re.match('.*' + search_word.lower() + '.*', sentence.lower()):
                 word_list += sentence.split()
 
     if(len(word_list) == 0):
         print "cannot find instance of " + word + ' with search type:',\
-               +search_type
+            +search_type
         usage()
         sys.exit(-1)
     return word_list
@@ -84,6 +84,7 @@ def get_freq(name, msg, search_type, extra_stopwords):
     word_tuple = word_dict.items()
     sorted_tuple = sorted(word_tuple, key=get_tuples, reverse=True)
     smaller = sorted_tuple[:min(200, len(sorted_tuple))]
+
     with open('result.txt', 'w') as file:
         for tuple in smaller:
             file.write(tuple[0] + ' %d' % tuple[1] + '\n')
@@ -101,8 +102,8 @@ def word_cloud(frequency_list):
         total += tuple[1]
 
     # Normalise the relative frequencies
-    relative_freq = [tuple[1]/total for tuple in frequency_list]
-    normalised = [val*(1/max(relative_freq)) for val in relative_freq]
+    relative_freq = [tuple[1] / total for tuple in frequency_list]
+    normalised = [val * (1 / max(relative_freq)) for val in relative_freq]
     words = [tuple[0] for tuple in frequency_list]
 
     fontsize = 100
@@ -112,7 +113,7 @@ def word_cloud(frequency_list):
     while not status:
         image = Image.new('L', (512, 512), color=0)
         draw = ImageDraw.Draw(image)
-        fontlist = [fontsize*val for val in normalised]
+        fontlist = [fontsize * val for val in normalised]
         iteration = 0
 
         while(iteration < len(words)):
@@ -134,10 +135,10 @@ def word_cloud(frequency_list):
             else:
                 iteration += 1
                 # Choose a random index and draw text centered there
-                rand_val = location[random.randint(0, len(location)-1)]
+                rand_val = location[random.randint(0, len(location) - 1)]
                 # adjusting the location to account for offset from
                 # kernel centre
-                value = (rand_val[0]-size[0]/2, rand_val[1]-size[1]/2)
+                value = (rand_val[0] - size[0] / 2, rand_val[1] - size[1] / 2)
                 draw.text(value[::-1], word, font=fnt, fill=255)
             if word == words[-1]:
                 print 'finished'
@@ -178,7 +179,6 @@ def main():
 
     with open(file_name, 'r') as file:
         msg = file.read()
-    # file.close()
     frequency_list = get_freq(name, msg, search_type, extra_stopwords)
     word_cloud(frequency_list)
 
